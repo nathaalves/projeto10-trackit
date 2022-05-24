@@ -5,36 +5,36 @@ import React, { useState } from 'react';
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
-
 import { ThreeDots } from 'react-loader-spinner';
 
+export default function RegisterPage () {
 
-export default function LoginPage () {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isActive, setIsActive] = useState(true);
-    const [token, setToken] = useState('');
     const navigate = useNavigate();
+    const [isActive, setIsActive] = useState(true);
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [image, setImage] = useState("");
+    const [password, setPassword] = useState("");
 
-    function login (e) {
+    function register (e) {
 
         e.preventDefault();
         setIsActive(false);
 
         const body = {
-            email,
-            password
-        };
+            email: email,
+            name: name,
+            image: image,
+            password: password
+        }
 
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body);
-
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body);
+        
         promise
             .then( response => {
-                const { data } = response;
-                navigate('/hoje')
+                navigate("/");
         })
-            .catch ( err => {
+            .catch( err => {
                 alert(err.response.data.message)
                 setIsActive(true);
         })
@@ -43,10 +43,10 @@ export default function LoginPage () {
     return (
         <Container isActive={isActive}>
             <img src={logo} alt='logo'></img>
-            <form onSubmit={login}>
+            <form onSubmit={register}>
                 <input 
                     type='email' 
-                    placeholder='Email' 
+                    placeholder='email' 
                     onChange={ (e) => setEmail(e.target.value) } 
                     value={email}
                     disabled={!isActive}
@@ -54,22 +54,39 @@ export default function LoginPage () {
                 />
                 <input 
                     type='password' 
-                    placeholder='Senha' 
+                    placeholder='senha' 
                     onChange={ (e) => setPassword(e.target.value) } 
                     value={password}
                     disabled={!isActive}
                     required
                 />
+                <input 
+                    type='text' 
+                    placeholder='nome' 
+                    onChange={ (e) => setName(e.target.value) } 
+                    value={name}
+                    disabled={!isActive}
+                    required
+                />
+                <input 
+                    type='url' 
+                    placeholder='foto' 
+                    onChange={ (e) => setImage(e.target.value) } 
+                    value={image}
+                    disabled={!isActive}
+                    required
+                />
                 <Button type='submit' isActive={isActive}>
-                    {isActive ? 'Entrar' : <ThreeDots color="#FFFFFF" height={15} width={60}  />}
+                    {isActive ? 'Cadastrar' : <ThreeDots color="#FFFFFF" height={15} width={60}  />}
                 </Button>
             </form>
-            <Link to='/cadastro'>
-                <SubText>Não tem uma conta? Cadastre-se!</SubText>
+            <Link to='/'>
+                <SubText>Já tem uma conta? Faça login!</SubText>
             </Link>
         </Container>
     )
 }
+
 
 const Container = styled.div`
     display: flex;
