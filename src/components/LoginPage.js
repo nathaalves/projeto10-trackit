@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import UserContext from "../contexts/UserContext";
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
@@ -14,7 +15,7 @@ export default function LoginPage () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isActive, setIsActive] = useState(true);
-    const [token, setToken] = useState('');
+    const { setCredentials } = useContext(UserContext);
     const navigate = useNavigate();
 
     function login (e) {
@@ -32,7 +33,11 @@ export default function LoginPage () {
         promise
             .then( response => {
                 const { data } = response;
-                navigate('/hoje')
+                setCredentials({
+                    profile: data.image,
+                    token: data.token
+                })
+                navigate('/habitos')
         })
             .catch ( err => {
                 alert(err.response.data.message)

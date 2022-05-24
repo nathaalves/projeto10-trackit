@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import logo from '../assets/images/logo-name.svg';
 
-export default function Header () {
+export default function Header ( { image } ) {
     return (
         <Container>
             <img src={logo} alt="logo"/>
-            <img src='https://i.pinimg.com/originals/2f/fa/e6/2ffae67cccf7d31c352649d8a3d0810c.jpg' alt='profile picture'/>
+            <img src={image} alt='profile'/>
         </Container>
     )
 }
@@ -19,6 +19,9 @@ const Container = styled.header`
     height: 70px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     background-color: #126BA5;
+
+    position: fixed;
+    top: 0;
 
     img {
         height: 50px;
