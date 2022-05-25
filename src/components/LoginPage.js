@@ -105,13 +105,17 @@ const Container = styled.div`
         background-color: ${ props => props.isActive ? '#FFFFFF' : '#F2F2F2'};
 
         margin-bottom: 5px;
+
+        font-family: 'Lexend Deca';
+        font-weight: 400;
+        font-size: 20px;
+        color: ${ props => props.isActive ? '#666666' : '#AFAFAF'};
     }
 
     input::placeholder {
         font-family: 'Lexend Deca';
         font-weight: 400;
         font-size: 20px;
-        line-height: 25px;
         color: ${ props => props.isActive ? '#DBDBDB' : '#AFAFAF'};
     }
 `;

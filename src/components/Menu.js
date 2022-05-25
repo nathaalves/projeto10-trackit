@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 export default function Menu () {
 
-    const [progress, setProgress] = useState(0.9);
+    const [progress] = useState(0.9);
 
     return (
         <Container>
@@ -36,9 +36,11 @@ const Container = styled.footer`
 
     width: 100vw;
     height: 70px;
+    background-color: #FFFFFF;
 
     position: fixed;
     bottom: 0;
+    z-index: 1;
 
     font-family: 'Lexend Deca';
     font-weight: 400;
