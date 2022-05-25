@@ -72,7 +72,9 @@ export default function HabitsPage () {
                 {isVisible ? 
                     <AddHabitWindow setIsVisible={setIsVisible} requestHabitsList={requestHabitsList} />
                 : null}
-                {listHabits()}
+                <HabitsList>
+                    {listHabits()}
+                </HabitsList>
             </Container>
             <Menu />
         </>
@@ -90,6 +92,10 @@ const Container = styled.main`
 
     background-color: #E5E5E5;
 `;
+
+const HabitsList = styled.div`
+    overflow-y: scroll;
+`
 
 const Message = styled.p`
     width: 100vw;
