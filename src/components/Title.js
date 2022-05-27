@@ -22,7 +22,7 @@ const Title = styled.div`
         font-weight: 400;
         font-size: 18px;
         line-height: 22px;
-        color: #8FC549;
+        color: ${ props => props.progress === 0 ? '#BABABA' : '#8FC549'};
     }
     
     button {

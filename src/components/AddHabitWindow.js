@@ -1,32 +1,35 @@
-import styled from 'styled-components';
-import { useState } from "react";
 import axios from 'axios';
+import styled from 'styled-components';
 import { ThreeDots } from 'react-loader-spinner';
+import { useState, useContext } from "react";
+import UserContext from '../contexts/UserContext';
+
 
 export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
 
-    const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")) )
-    const [habitName, setHabitName] = useState("")
-    const [habitDays, setHabitDays] = useState([])
+    const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const {habitName, setHabitName, habitDays, setHabitDays} = useContext(UserContext);
     const [isActive, setIsActive] = useState(true);
 
     function addHabit () {
 
         setIsActive(false);
+        
+        const credentials = JSON.parse(localStorage.getItem('credentials'));
+        const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
         const body = {
             name: habitName,
             days: habitDays
-        }
+        };
 
         const config = {
             headers: {
-                "Authorization": `Bearer ${credentials.token}`
+                'Authorization': `Bearer ${credentials.token}`
             }
-        }
+        };
 
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config);
+        const promise = axios.post(API, body, config);
 
         promise
             .then( () => { 
@@ -39,18 +42,18 @@ export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
             .catch( err => {
                 alert(err.response.data.message)
                 setIsActive(true)
-            })
+            });
     }
 
     function selectDay (index) {
         
-        if ( habitDays.includes(index) ){
+        if ( habitDays.includes(index) ) {
             habitDays.splice(habitDays.indexOf(index), 1);
         } else {
             habitDays.push(index);
         }
         
-        setHabitDays([...habitDays])
+        setHabitDays([...habitDays]);
     }
 
     function renderDays (days) {
@@ -82,7 +85,9 @@ export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
                 { renderDays(days) }
             </WeekDays>
             <Buttons isActive={isActive}>
-                <div onClick={ isActive ? () => setIsVisible(false) : null }>Cancelar</div>
+                <div onClick={ isActive ? () => setIsVisible(false) : null }>
+                    {'Cancelar'}
+                </div>
                 <div onClick={ isActive ? addHabit : null}>
                     {isActive ? 'Salvar' : <ThreeDots color="#FFFFFF" height={15} width={60}  />}
                 </div>

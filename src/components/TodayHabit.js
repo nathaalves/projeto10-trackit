@@ -1,11 +1,14 @@
 import styled from 'styled-components';
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import checkmark from '../assets/images/checkmark.svg'
+import requestTodayHabitsList from './requestHabitsList';
 
-export default function TodayHabit ( { habit, requestTodayHabitsList } ) {
+export default function TodayHabit ( { habit } ) {
 
     const { id, name, done, currentSequence, highestSequence} = habit;
+    const { setProgress, todayHabits, setTodayHabits } = useContext(UserContext);
     const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
     
     function markHabit (id, done) {
@@ -19,15 +22,15 @@ export default function TodayHabit ( { habit, requestTodayHabitsList } ) {
         }
 
         let promise = {};
-        console.log(id)
+        
         if (done) {
-            promise = axios.post(`${API}/${id}/uncheck`, config)
+            promise = axios.post(`${API}/${id}/uncheck`, null, config)
 
         } else {
-            promise = axios.post(`${API}/${id}/check`, config)
+            promise = axios.post(`${API}/${id}/check`, null, config)
         }
         promise
-            .then( () => requestTodayHabitsList() )
+            .then( () => requestTodayHabitsList (setTodayHabits, setProgress) )
             .catch( err => alert(err.response.data.message) )
     }
 
@@ -39,10 +42,16 @@ export default function TodayHabit ( { habit, requestTodayHabitsList } ) {
             <div>
                 <h2>{name}</h2>
                 <h3>
-                    Sequência atual: <ProgressCount color={progressColor}>{currentSequence} {}</ProgressCount>
+                    {`Sequência atual: `}
+                    <ProgressCount color={progressColor} >
+                        {`${currentSequence} ${currentSequence > 1 ? "dias" : "dia"}`}
+                    </ProgressCount>
                 </h3>
                 <h3>
-                    Seu recorde: <ProgressCount color={recordColor}>{highestSequence} {}</ProgressCount>
+                    {`Seu recorde: `}
+                    <ProgressCount color={recordColor} >
+                        {`${highestSequence} ${highestSequence > 1 ? "dias" : "dia"}`}
+                    </ProgressCount>
                 </h3>
             </div>
             <div onClick={ () => markHabit(id, done) } >

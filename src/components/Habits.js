@@ -22,12 +22,8 @@ export default function Habits ({ habitDays, habitName, habitId, requestHabitsLi
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
     
             promise
-                .then( response => {
-                    requestHabitsList()
-            })
-                .catch( err => {
-                    alert(err.response.data.message);
-            })
+                .then( () => requestHabitsList())
+                .catch( err => alert(err.response.data.message));
         }
         
     }

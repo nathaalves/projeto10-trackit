@@ -6,16 +6,18 @@ import Menu from "./Menu";
 import Title from './Title';
 import Main from "./Main";
 import TodayHabit from "./TodayHabit";
+import requestTodayHabitsList from "./requestHabitsList";
 
 
 export default function TodayHabitsPage () {
     
-    const { progress, setProgress } = useContext(UserContext);
+    const { progress, setProgress, todayHabits, setTodayHabits } = useContext(UserContext);
+    //const [progress, setProgress] = useState(0);
     const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")) )
-    const [todayHabits, setTodayHabits] = useState([]);
+    //const [todayHabits, setTodayHabits] = useState([]);
     const [date, setDate] = useState("")
 
-    function requestTodayHabitsList () {
+    /* function requestTodayHabitsList () {
 
         const config = {
             headers: {
@@ -28,10 +30,10 @@ export default function TodayHabitsPage () {
         promise
             .then( response => {
                 setTodayHabits([...response.data])
-                setProgress(todayHabits.filter(habit => habit.done === true) / todayHabits.length)
+                setProgress(todayHabits.filter(habit => habit.done === true).length / todayHabits.length)
             })
             .catch( err => alert(err.response.data.message) )
-    }
+    } */
 
     useEffect( () => {
 
@@ -47,7 +49,7 @@ export default function TodayHabitsPage () {
     
         setDate(`${dayStr[dayIndex]}, ${dayOfMonth}/${month}`)
 
-        requestTodayHabitsList ()
+        requestTodayHabitsList (setTodayHabits, setProgress)
     }, [])
 
     function renderTodayHabits () {
@@ -57,21 +59,27 @@ export default function TodayHabitsPage () {
                     <TodayHabit 
                         key={index}
                         habit={habit}
-                        requestTodayHabitsList={requestTodayHabitsList}
                     />
                 )
             })
         )
     }
 
+    //console.log(progress)
+
     return (
         <>
             <Header image={credentials.image} />
             <Main>
-                <Title>
+                <Title progress={progress}>
                     <div>
                         <h2>{date}</h2>
-                        <h3>%concluido</h3>
+                        <h3>
+                            {progress === 0 ?
+                                'Nenhum hábito concluido ainda' :
+                                `${Math.round(progress*100).toFixed(0)}% dos hábitos concluídos`
+                            }
+                        </h3>
                     </div>
                 </Title>
                 <div>

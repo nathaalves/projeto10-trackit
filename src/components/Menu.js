@@ -1,14 +1,20 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from "../contexts/UserContext";
 import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import requestTodayHabitsList from './requestHabitsList';
 
 
 export default function Menu () {
 
-    const { progress } = useContext(UserContext);
+    const { progress, setProgress, setTodayHabits } = useContext(UserContext);
+    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
+
+    useEffect( () => {
+        requestTodayHabitsList (setTodayHabits, setProgress)
+    })
 
     return (
         <Container>

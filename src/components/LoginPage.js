@@ -1,11 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import UserContext from "../contexts/UserContext";
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
 import { ThreeDots } from 'react-loader-spinner';
+
+//import { useContext } from "react";
+//import UserContext from "../contexts/UserContext";
+//const { pro } = useContext(UserContext);
 
 export default function LoginPage () {
 
