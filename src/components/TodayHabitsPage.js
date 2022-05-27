@@ -1,55 +1,35 @@
-import { useEffect, useState, useContext } from "react";
-import UserContext from "../contexts/UserContext";
-import axios from "axios";
-import Header from "./Header";
-import Menu from "./Menu";
+import { useEffect, useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import Header from './Header';
+import Menu from './Menu';
 import Title from './Title';
-import Main from "./Main";
-import TodayHabit from "./TodayHabit";
-import requestTodayHabitsList from "./requestHabitsList";
+import Main from './Main';
+import TodayHabit from './TodayHabit';
+import requestTodayHabitsList from './requestHabitsList';
 
 
 export default function TodayHabitsPage () {
     
     const { progress, setProgress, todayHabits, setTodayHabits } = useContext(UserContext);
-    //const [progress, setProgress] = useState(0);
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")) )
-    //const [todayHabits, setTodayHabits] = useState([]);
-    const [date, setDate] = useState("")
-
-    /* function requestTodayHabitsList () {
-
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${credentials.token}`
-            }
-        }
-
-        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', config);
-
-        promise
-            .then( response => {
-                setTodayHabits([...response.data])
-                setProgress(todayHabits.filter(habit => habit.done === true).length / todayHabits.length)
-            })
-            .catch( err => alert(err.response.data.message) )
-    } */
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const [profilePicture] = useState(credentials.image);
+    const [date, setDate] = useState('');
 
     useEffect( () => {
 
-        const dayjs = require('dayjs')
-        const weekday = require('dayjs/plugin/weekday')
-        dayjs.extend(weekday)
+        const dayjs = require('dayjs');
+        const weekday = require('dayjs/plugin/weekday');
+        dayjs.extend(weekday);
 
-        const dayStr = ['Domimngo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+        const dayStr = ['Domimngo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
-        const dayIndex = dayjs().weekday()
-        const dayOfMonth = dayjs().date()
-        const month = (dayjs().month() < 9) ? "0" + (dayjs().month() + 1) : (dayjs().month() + 1)
+        const dayIndex = dayjs().weekday();
+        const dayOfMonth = dayjs().date();
+        const month = (dayjs().month() < 9) ? '0' + (dayjs().month() + 1) : (dayjs().month() + 1);
     
-        setDate(`${dayStr[dayIndex]}, ${dayOfMonth}/${month}`)
+        setDate(`${dayStr[dayIndex]}, ${dayOfMonth}/${month}`);
 
-        requestTodayHabitsList (setTodayHabits, setProgress)
+        requestTodayHabitsList (setTodayHabits, setProgress);
     }, [])
 
     function renderTodayHabits () {
@@ -65,11 +45,9 @@ export default function TodayHabitsPage () {
         )
     }
 
-    //console.log(progress)
-
     return (
         <>
-            <Header image={credentials.image} />
+            <Header image={profilePicture} />
             <Main>
                 <Title progress={progress}>
                     <div>
