@@ -1,31 +1,33 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useState } from 'react';
 import lixeira from '../assets/images/lixeira.svg'
 
 export default function Habits ({ habitDays, habitName, habitId, requestHabitsList }) {
 
-    const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
+    const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 
     function deleteHabit (id) {
 
-        const result = window.confirm("Você realmente deseja deletar esse hábito?")
+        const result = window.confirm('Você realmente deseja deletar esse hábito?')
 
         if (result) {
+
+            const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
+
+            const credentials = JSON.parse(localStorage.getItem('credentials'));
+
             const config = {
                 headers: {
-                    "Authorization": `Bearer ${credentials.token}`
+                    'Authorization': `Bearer ${credentials.token}`
                 }
             }
-    
-            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+            
+            const promise = axios.delete(`${API}/${id}`, config)
     
             promise
                 .then( () => requestHabitsList())
                 .catch( err => alert(err.response.data.message));
         }
-        
     }
 
     function renderDays (days) {
