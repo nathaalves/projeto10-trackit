@@ -8,7 +8,7 @@ export default function Habits ({ habitDays, habitName, habitId, requestHabitsLi
 
     function deleteHabit (id) {
 
-        const result = window.confirm('Você realmente deseja deletar esse hábito?')
+        const result = window.confirm('Você realmente deseja deletar esse hábito?');
 
         if (result) {
 
@@ -20,9 +20,9 @@ export default function Habits ({ habitDays, habitName, habitId, requestHabitsLi
                 headers: {
                     'Authorization': `Bearer ${credentials.token}`
                 }
-            }
+            };
             
-            const promise = axios.delete(`${API}/${id}`, config)
+            const promise = axios.delete(`${API}/${id}`, config);
     
             promise
                 .then( () => requestHabitsList())
@@ -84,7 +84,7 @@ const HabitName = styled.h2`
     color: #666666;
 
     margin-bottom: 8px;
-`
+`;
 
 const WeekDays = styled.div`
     display: flex;

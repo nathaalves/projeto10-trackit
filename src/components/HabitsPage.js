@@ -1,18 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import Header from "./Header";
-import Menu from "./Menu";
-import Title from './Title';
+import Main from './Main';import Title from './Title';
 import AddHabitWindow from './AddHabitWindow';
 import Habits from './Habits';
-import Main from './Main';
+import Menu from "./Menu";
 
 export default function HabitsPage () {
 
     const navigate = useNavigate();
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
+    const credentials = JSON.parse(localStorage.getItem('credentials'));
+    const [profilePicture] = useState(credentials.image);
     const [habits, setHabits] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -20,9 +20,9 @@ export default function HabitsPage () {
 
         const config = {
             headers: {
-                "Authorization": `Bearer ${credentials.token}`
+                'Authorization': `Bearer ${credentials.token}`
             }
-        }
+        };
 
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
 
@@ -30,13 +30,11 @@ export default function HabitsPage () {
             .then( response => setHabits([...response.data]) )
             .catch( err => {
                 alert(err.response.data.message);
-                navigate("/")
+                navigate("/");
             })
     }
 
-    useEffect( () => {
-        requestHabitsList ()
-    }, [])
+    useEffect( () => requestHabitsList (), []);
     
     function listHabits () {
 
@@ -54,17 +52,17 @@ export default function HabitsPage () {
 
         return (
             <Message>
-                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear
+                {'Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear'}
             </Message>
         )
     }
 
     return (
         <>
-            <Header image={credentials.image} />
+            <Header image={profilePicture} />
             <Main>
                 <Title>
-                    <h2>Meus hábitos</h2>
+                    <h2>{'Meus hábitos'}</h2>
                     <button onClick={ () => setIsVisible(true) }>+</button>
                 </Title>
                 {isVisible ? 
