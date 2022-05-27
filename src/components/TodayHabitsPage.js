@@ -5,7 +5,7 @@ import Menu from './Menu';
 import Title from './Title';
 import Main from './Main';
 import TodayHabit from './TodayHabit';
-import requestTodayHabitsList from './requestHabitsList';
+import requestTodayHabitsList from './requestTodayHabitsList';
 
 
 export default function TodayHabitsPage () {

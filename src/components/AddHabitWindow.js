@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { ThreeDots } from 'react-loader-spinner';
 import { useState, useContext } from "react";
 import UserContext from '../contexts/UserContext';
+import requestTodayHabitsList from './requestTodayHabitsList';
 
 
 export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
 
     const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-    const {habitName, setHabitName, habitDays, setHabitDays} = useContext(UserContext);
+    const {habitName, setHabitName, habitDays, setHabitDays, setTodayHabits, setProgress} = useContext(UserContext);
     const [isActive, setIsActive] = useState(true);
 
     function addHabit () {
@@ -34,6 +35,7 @@ export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
         promise
             .then( () => { 
                 requestHabitsList();
+                requestTodayHabitsList (setTodayHabits, setProgress)
                 setIsVisible(false);
                 setIsActive(true);
                 setHabitName("");

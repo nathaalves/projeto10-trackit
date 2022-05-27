@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useState, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 import checkmark from '../assets/images/checkmark.svg'
-import requestTodayHabitsList from './requestHabitsList';
+import requestTodayHabitsList from './requestTodayHabitsList';
 
 export default function TodayHabit ( { habit } ) {
 

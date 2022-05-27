@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react';
 import UserContext from "../contexts/UserContext";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import requestTodayHabitsList from './requestHabitsList';
+import requestTodayHabitsList from './requestTodayHabitsList';
 
 
 export default function Menu () {
