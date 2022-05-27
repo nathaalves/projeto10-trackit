@@ -21,6 +21,8 @@ export default function RegisterPage () {
         e.preventDefault();
         setIsActive(false);
 
+        const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up';
+
         const body = {
             email: email,
             name: name,
@@ -28,14 +30,14 @@ export default function RegisterPage () {
             password: password
         }
 
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body);
+        const promise = axios.post(API, body);
         
         promise
             .then( () => navigate("/") )
             .catch( err => {
-                alert(err.response.data.message)
+                alert(err.response.data.message);
                 setIsActive(true);
-        })
+            });
     }
 
     return (
@@ -79,7 +81,7 @@ export default function RegisterPage () {
                 </Button>
             </form>
             <Link to='/'>
-                <SubText>Já tem uma conta? Faça login!</SubText>
+                <SubText>{'Já tem uma conta? Faça login!'}</SubText>
             </Link>
         </Container>
     )
