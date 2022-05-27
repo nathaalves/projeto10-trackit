@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { useState, useContext, useEffect } from 'react';
-import UserContext from "../contexts/UserContext";
 import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import UserContext from "../contexts/UserContext";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import requestTodayHabitsList from './requestHabitsList';
@@ -10,16 +10,15 @@ import requestTodayHabitsList from './requestHabitsList';
 export default function Menu () {
 
     const { progress, setProgress, setTodayHabits } = useContext(UserContext);
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
 
     useEffect( () => {
-        requestTodayHabitsList (setTodayHabits, setProgress)
-    })
+        requestTodayHabitsList (setTodayHabits, setProgress);
+    }, []);
 
     return (
         <Container>
             <Link to="/habitos">
-                <h3>Hábitos</h3>
+                <h3>{'Hábitos'}</h3>
             </Link>
             <Link to="/hoje">
                 <div>
@@ -31,7 +30,7 @@ export default function Menu () {
                 </div>
             </Link>
             <Link to="/historico">
-                <h3>Histórico</h3>
+                <h3>{'Histórico'}</h3>
             </Link>
         </Container>
     )
