@@ -5,11 +5,6 @@ import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import HabitsPage from "./HabitsPage";
 import TodayHabitsPage from "./TodayHabitsPage";
-import Menu from "./Menu";
-
-//import { useContext } from "react";
-//import UserContext from "../contexts/UserContext";
-//const { pro } = useContext(UserContext);
 
 export default function App () {
 
@@ -37,7 +32,6 @@ export default function App () {
                     <Route path="/habitos" element={<HabitsPage />} />
                     <Route path="/hoje" element={<TodayHabitsPage />} />
                 </Routes>
-                {/* {isVisible ? <Menu /> : null} */}
             </BrowserRouter>
         </UserContext.Provider>
     )
