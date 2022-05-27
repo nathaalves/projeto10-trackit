@@ -1,37 +1,36 @@
+import axios from 'axios';
 import styled from 'styled-components';
-import { useState, useContext } from "react";
-import UserContext from "../contexts/UserContext";
-import axios from "axios";
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 import checkmark from '../assets/images/checkmark.svg'
 import requestTodayHabitsList from './requestHabitsList';
 
 export default function TodayHabit ( { habit } ) {
 
     const { id, name, done, currentSequence, highestSequence} = habit;
-    const { setProgress, todayHabits, setTodayHabits } = useContext(UserContext);
-    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
+    const { setProgress, setTodayHabits } = useContext(UserContext);
+    const [credentials] = useState( JSON.parse(localStorage.getItem('credentials')) );
     
     function markHabit (id, done) {
 
-        const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+        const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
         const config = {
             headers: {
-                "Authorization": `Bearer ${credentials.token}`
+                'Authorization': `Bearer ${credentials.token}`
             }
-        }
+        };
 
         let promise = {};
         
         if (done) {
-            promise = axios.post(`${API}/${id}/uncheck`, null, config)
-
+            promise = axios.post(`${API}/${id}/uncheck`, null, config);
         } else {
-            promise = axios.post(`${API}/${id}/check`, null, config)
+            promise = axios.post(`${API}/${id}/check`, null, config);
         }
         promise
             .then( () => requestTodayHabitsList (setTodayHabits, setProgress) )
-            .catch( err => alert(err.response.data.message) )
+            .catch( err => alert(err.response.data.message) );
     }
 
     const progressColor = done ? '#8FC549' : '#666666';
@@ -44,13 +43,13 @@ export default function TodayHabit ( { habit } ) {
                 <h3>
                     {`Sequência atual: `}
                     <ProgressCount color={progressColor} >
-                        {`${currentSequence} ${currentSequence > 1 ? "dias" : "dia"}`}
+                        {`${currentSequence} ${currentSequence > 1 ? 'dias' : 'dia'}`}
                     </ProgressCount>
                 </h3>
                 <h3>
                     {`Seu recorde: `}
                     <ProgressCount color={recordColor} >
-                        {`${highestSequence} ${highestSequence > 1 ? "dias" : "dia"}`}
+                        {`${highestSequence} ${highestSequence > 1 ? 'dias' : 'dia'}`}
                     </ProgressCount>
                 </h3>
             </div>
@@ -66,7 +65,7 @@ export default function TodayHabit ( { habit } ) {
 
 const ProgressCount = styled.span`
     color: ${props => props.color};
-`
+`;
 
 const Container = styled.div`
     display: flex;
