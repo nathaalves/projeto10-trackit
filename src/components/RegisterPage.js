@@ -31,9 +31,7 @@ export default function RegisterPage () {
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body);
         
         promise
-            .then( response => {
-                navigate("/");
-        })
+            .then( () => navigate("/") )
             .catch( err => {
                 alert(err.response.data.message)
                 setIsActive(true);

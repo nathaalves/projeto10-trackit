@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useContext } from 'react';
+import UserContext from "../contexts/UserContext";
 import { Link } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+
 export default function Menu () {
 
-    const [progress] = useState(0.9);
+    const { progress } = useContext(UserContext);
 
     return (
         <Container>

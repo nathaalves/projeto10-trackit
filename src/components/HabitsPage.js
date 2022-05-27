@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../contexts/UserContext";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import Header from "./Header";
@@ -8,11 +7,12 @@ import Menu from "./Menu";
 import Title from './Title';
 import AddHabitWindow from './AddHabitWindow';
 import Habits from './Habits';
+import Main from './Main';
 
 export default function HabitsPage () {
 
     const navigate = useNavigate();
-    const { credentials } = useContext(UserContext);
+    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
     const [habits, setHabits] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -27,13 +27,11 @@ export default function HabitsPage () {
         const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
 
         promise
-            .then( response => {
-                setHabits([...response.data]);
-        })
+            .then( response => setHabits([...response.data]) )
             .catch( err => {
                 alert(err.response.data.message);
                 navigate("/")
-        })
+            })
     }
 
     useEffect( () => {
@@ -63,39 +61,26 @@ export default function HabitsPage () {
 
     return (
         <>
-            <Header image={credentials.profile} />
-            <Container>
+            <Header image={credentials.image} />
+            <Main>
                 <Title>
                     <h2>Meus hábitos</h2>
-                    <div onClick={ () => setIsVisible(true) }>+</div>
+                    <button onClick={ () => setIsVisible(true) }>+</button>
                 </Title>
                 {isVisible ? 
-                    <AddHabitWindow setIsVisible={setIsVisible} requestHabitsList={requestHabitsList} />
+                    <AddHabitWindow 
+                        setIsVisible={setIsVisible} 
+                        requestHabitsList={requestHabitsList} 
+                    />
                 : null}
-                <HabitsList>
+                <div>
                     {listHabits()}
-                </HabitsList>
-            </Container>
+                </div>
+            </Main>
             <Menu />
         </>
     )
 }
-
-const Container = styled.main`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    width: 100vw;
-    height: 100vh;
-    padding: 70px;
-
-    background-color: #E5E5E5;
-`;
-
-const HabitsList = styled.div`
-    overflow-y: scroll;
-`
 
 const Message = styled.p`
     width: 100vw;

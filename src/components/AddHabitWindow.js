@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { useState, useContext } from "react";
-import UserContext from "../contexts/UserContext";
+import { useState } from "react";
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 
 export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
 
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const { credentials, habitName, setHabitName, habitDays, setHabitDays } = useContext(UserContext);
+    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")) )
+    const [habitName, setHabitName] = useState("")
+    const [habitDays, setHabitDays] = useState([])
     const [isActive, setIsActive] = useState(true);
 
     function addHabit () {
@@ -34,11 +35,11 @@ export default function AddHabitWindow ( { setIsVisible, requestHabitsList } ) {
                 setIsActive(true);
                 setHabitName("");
                 setHabitDays([]);
-        })
+            })
             .catch( err => {
                 alert(err.response.data.message)
                 setIsActive(true)
-        })
+            })
     }
 
     function selectDay (index) {

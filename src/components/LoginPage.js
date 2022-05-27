@@ -1,21 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState, useContext } from 'react';
-import UserContext from "../contexts/UserContext";
+import React, { useState } from 'react';
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
-
 import { ThreeDots } from 'react-loader-spinner';
-
 
 export default function LoginPage () {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isActive, setIsActive] = useState(true);
-    const { setCredentials } = useContext(UserContext);
     const navigate = useNavigate();
 
     function login (e) {
@@ -33,16 +29,13 @@ export default function LoginPage () {
         promise
             .then( response => {
                 const { data } = response;
-                setCredentials({
-                    profile: data.image,
-                    token: data.token
-                })
+                localStorage.setItem("credentials", JSON.stringify(data));
                 navigate('/habitos')
-        })
+            })
             .catch ( err => {
                 alert(err.response.data.message)
                 setIsActive(true);
-        })
+            })
     }
 
     return (

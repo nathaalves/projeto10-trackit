@@ -1,13 +1,12 @@
 import axios from 'axios';
 import styled from 'styled-components';
+import { useState } from 'react';
 import lixeira from '../assets/images/lixeira.svg'
-import { useContext } from "react";
-import UserContext from "../contexts/UserContext";
 
 export default function Habits ({ habitDays, habitName, habitId, requestHabitsList }) {
 
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
-    const { credentials } = useContext(UserContext);
+    const [credentials] = useState( JSON.parse(localStorage.getItem("credentials")))
 
     function deleteHabit (id) {
 

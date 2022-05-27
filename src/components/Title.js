@@ -17,7 +17,15 @@ const Title = styled.div`
         color: #126BA5;
     }
 
-    div {
+    h3 {
+        font-family: 'Lexend Deca';
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        color: #8FC549;
+    }
+    
+    button {
         display: flex;
         justify-content: center;
         align-items: center;
