@@ -37,5 +37,4 @@ const Container = styled.header`
         width: 50px;
         border-radius: 50%;
     }
-
-`
+`;

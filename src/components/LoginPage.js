@@ -1,16 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState, useContext } from 'react';
-import UserContext from "../contexts/UserContext";
+import { ThreeDots } from 'react-loader-spinner';
+import { Link, useNavigate } from 'react-router-dom'; 
+import React, { useState } from 'react';
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
-import { ThreeDots } from 'react-loader-spinner';
-
-//import { useContext } from "react";
-//import UserContext from "../contexts/UserContext";
-//const { pro } = useContext(UserContext);
 
 export default function LoginPage () {
 
@@ -24,21 +19,23 @@ export default function LoginPage () {
         e.preventDefault();
         setIsActive(false);
 
+        const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login';
+
         const body = {
             email,
             password
         };
 
-        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body);
+        const promise = axios.post(API, body);
 
         promise
             .then( response => {
                 const { data } = response;
-                localStorage.setItem("credentials", JSON.stringify(data));
-                navigate('/habitos')
+                localStorage.setItem('credentials', JSON.stringify(data));
+                navigate('/habitos');
             })
             .catch ( err => {
-                alert(err.response.data.message)
+                alert(err.response.data.message);
                 setIsActive(true);
             })
     }
@@ -68,7 +65,7 @@ export default function LoginPage () {
                 </Button>
             </form>
             <Link to='/cadastro'>
-                <SubText>Não tem uma conta? Cadastre-se!</SubText>
+                <SubText>{'Não tem uma conta? Cadastre-se!'}</SubText>
             </Link>
         </Container>
     )
