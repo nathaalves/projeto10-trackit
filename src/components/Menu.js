@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import UserContext from "../contexts/UserContext";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -10,10 +10,13 @@ import requestTodayHabitsList from './requestTodayHabitsList';
 export default function Menu () {
 
     const { progress, setProgress, setTodayHabits } = useContext(UserContext);
+    const [wasNotExecuted, setWasNotExecuted] = useState(true);
 
-    useEffect( () => {
+
+    if(wasNotExecuted) {
         requestTodayHabitsList (setTodayHabits, setProgress);
-    }, []);
+        setWasNotExecuted(false)
+    }
 
     return (
         <Container>

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 import lixeira from '../assets/images/lixeira.svg'
+import requestTodayHabitsList from './requestTodayHabitsList';
 
 export default function Habits ({ habitDays, habitName, habitId, requestHabitsList }) {
 
     const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const { setTodayHabits, setProgress } = useContext(UserContext);
 
     function deleteHabit (id) {
 
@@ -25,7 +29,10 @@ export default function Habits ({ habitDays, habitName, habitId, requestHabitsLi
             const promise = axios.delete(`${API}/${id}`, config);
     
             promise
-                .then( () => requestHabitsList())
+                .then( () => {
+                    requestHabitsList();
+                    requestTodayHabitsList (setTodayHabits, setProgress);
+                })
                 .catch( err => alert(err.response.data.message));
         }
     }

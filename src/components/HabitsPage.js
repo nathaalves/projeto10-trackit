@@ -1,7 +1,7 @@
 import axios from "axios";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./Header";
 import Main from './Main';import Title from './Title';
 import AddHabitWindow from './AddHabitWindow';
@@ -15,8 +15,11 @@ export default function HabitsPage () {
     const [profilePicture] = useState(credentials.image);
     const [habits, setHabits] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
+    const [wasNotExecuted, setWasNotExecuted] = useState(true);
 
     function requestHabitsList () {
+
+        const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
         const config = {
             headers: {
@@ -24,7 +27,7 @@ export default function HabitsPage () {
             }
         };
 
-        const promise = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config);
+        const promise = axios.get(API, config);
 
         promise
             .then( response => setHabits([...response.data]) )
@@ -34,9 +37,12 @@ export default function HabitsPage () {
             })
     }
 
-    useEffect( () => requestHabitsList (), []);
+    if (wasNotExecuted) {
+        requestHabitsList();
+        setWasNotExecuted(false);
+    }
     
-    function listHabits () {
+    function renderHabits () {
 
         if (habits.length > 0) {
             return habits.map( (habit, index) => 
@@ -72,7 +78,7 @@ export default function HabitsPage () {
                     />
                 : null}
                 <div>
-                    {listHabits()}
+                    {renderHabits()}
                 </div>
             </Main>
             <Menu />

@@ -1,21 +1,20 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 import Header from './Header';
 import Menu from './Menu';
 import Title from './Title';
 import Main from './Main';
 import TodayHabit from './TodayHabit';
-import requestTodayHabitsList from './requestTodayHabitsList';
-
 
 export default function TodayHabitsPage () {
     
-    const { progress, setProgress, todayHabits, setTodayHabits } = useContext(UserContext);
+    const { progress, todayHabits } = useContext(UserContext);
     const credentials = JSON.parse(localStorage.getItem('credentials'));
     const [profilePicture] = useState(credentials.image);
     const [date, setDate] = useState('');
+    const [wasNotExecuted, setWasNotExecuted] = useState(true);
 
-    useEffect( () => {
+    if (wasNotExecuted) {
 
         const dayjs = require('dayjs');
         const weekday = require('dayjs/plugin/weekday');
@@ -29,8 +28,8 @@ export default function TodayHabitsPage () {
     
         setDate(`${dayStr[dayIndex]}, ${dayOfMonth}/${month}`);
 
-        requestTodayHabitsList (setTodayHabits, setProgress);
-    }, [])
+        setWasNotExecuted(false)
+    }
 
     function renderTodayHabits () {
         return (
