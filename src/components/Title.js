@@ -26,6 +26,8 @@ const Title = styled.div`
     }
     
     button {
+
+        all: unset;
         display: flex;
         justify-content: center;
         align-items: center;

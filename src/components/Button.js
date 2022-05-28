@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
+
+    all: unset;
+
     display: flex;
     justify-content: center;
     align-items: center;
