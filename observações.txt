@@ -1,0 +1,2 @@
+- O componente Day do styled components se repete no AddHabitWindow.js e no Habits.js, assim como a função renderDays;
+

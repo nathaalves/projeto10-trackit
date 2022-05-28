@@ -5,6 +5,11 @@ import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import HabitsPage from "./HabitsPage";
 import TodayHabitsPage from "./TodayHabitsPage";
+import HistoricPage from "./HistoricPage";
+
+import '../assets/CSS/reset.css'
+import '../assets/CSS/style.css'
+import '../assets/CSS/Calendar.css'
 
 export default function App () {
 
@@ -31,6 +36,7 @@ export default function App () {
                     <Route path="/cadastro" element={<RegisterPage />} />
                     <Route path="/habitos" element={<HabitsPage />} />
                     <Route path="/hoje" element={<TodayHabitsPage />} />
+                    <Route path="/historico" element={<HistoricPage />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
