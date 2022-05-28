@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 import { Link, useNavigate } from 'react-router-dom'; 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from './Button';
 import SubText from './SubText';
 import logo from '../assets/images/Logo.svg';
@@ -13,6 +13,12 @@ export default function LoginPage () {
     const [password, setPassword] = useState('');
     const [isActive, setIsActive] = useState(true);
     const navigate = useNavigate();
+
+    useEffect ( () => {
+        if (localStorage.getItem('credentials') !== null) {
+            navigate('/habitos');
+        }
+    }, [navigate])
 
     function login (e) {
 

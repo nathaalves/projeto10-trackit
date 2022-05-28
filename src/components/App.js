@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import UserContext from "../contexts/UserContext";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-import HabitsPage from "./HabitsPage";
-import TodayHabitsPage from "./TodayHabitsPage";
-import HistoricPage from "./HistoricPage";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import UserContext from '../contexts/UserContext';
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
+import HabitsPage from './HabitsPage';
+import TodayHabitsPage from './TodayHabitsPage';
+import HistoricPage from './HistoricPage';
 
 import '../assets/CSS/reset.css'
 import '../assets/CSS/style.css'
@@ -15,7 +15,7 @@ export default function App () {
 
     const [progress, setProgress] = useState(0);
     const [todayHabits, setTodayHabits] = useState([]);
-    const [habitName, setHabitName] = useState("")
+    const [habitName, setHabitName] = useState('')
     const [habitDays, setHabitDays] = useState([])
 
     return (
@@ -32,11 +32,11 @@ export default function App () {
         }}>
             <BrowserRouter >
                 <Routes>
-                    <Route path="/" element={<LoginPage />} />
-                    <Route path="/cadastro" element={<RegisterPage />} />
-                    <Route path="/habitos" element={<HabitsPage />} />
-                    <Route path="/hoje" element={<TodayHabitsPage />} />
-                    <Route path="/historico" element={<HistoricPage />} />
+                    <Route path='/' element={<LoginPage />} />
+                    <Route path='/cadastro' element={<RegisterPage />} />
+                    <Route path='/habitos' element={<HabitsPage />} />
+                    <Route path='/hoje' element={<TodayHabitsPage />} />
+                    <Route path='/historico' element={<HistoricPage />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>

@@ -6,6 +6,7 @@ import Title from './Title';
 import Menu from './Menu'
 import Calendar from 'react-calendar'
 import dayjs from 'dayjs';
+import LoadingPage from './LoadingPage';
 
 export default function HistoricPage () {
 
@@ -17,19 +18,18 @@ export default function HistoricPage () {
     dayjs.updateLocale('en', {
         months: [
             'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Setenbro', 'Agosto', 'Outubro', 'Novembro', 'Dezembro'
-        ],
-        weekdays: [
-            "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"
-          ],
-        weekdaysShort: ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"]
+        ]
     })
     
     const credentials = JSON.parse(localStorage.getItem('credentials'));
     const [profilePicture] = useState(credentials.image);
     const [isFirtRender, setIsFirstRender] = useState(true);
     const [historicList, setHistoricList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     if (isFirtRender) {
+
+        setIsLoading(true);
 
         const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily';
 
@@ -44,6 +44,7 @@ export default function HistoricPage () {
         promise
             .then( response => {
                 setHistoricList([...response.data]);
+                setIsLoading(false);
             })
             .catch( err => alert(err.response.data.message))
         ;
@@ -68,7 +69,7 @@ export default function HistoricPage () {
         }
     }
 
-    function formatShortWeekday (locale, date) {
+    function formatShortWeekday (date) {
         const weekdaysAbreviation = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
         return weekdaysAbreviation[dayjs(date).day()];
     }
@@ -80,13 +81,17 @@ export default function HistoricPage () {
                 <Title>
                     <h2>Histórico</h2>
                 </Title>
-                <Calendar 
-                    tileClassName={tileClassName}
-                    formatDay={(locale, date) => dayjs(date).format('DD')}
-                    formatMonth={(locale, date) => dayjs(date).format('MMMM')}
-                    formatMonthYear={(locale, date) => dayjs(date).format('MMMM YYYY')}
-                    formatShortWeekday={(locale, date) => formatShortWeekday(locale, date)}
-                />
+                { isLoading ?
+                    <LoadingPage />
+                :    
+                    <Calendar 
+                        tileClassName={tileClassName}
+                        formatDay={(locale, date) => dayjs(date).format('DD')}
+                        formatMonth={(locale, date) => dayjs(date).format('MMMM')}
+                        formatMonthYear={(locale, date) => dayjs(date).format('MMMM YYYY')}
+                        formatShortWeekday={(locale, date) => formatShortWeekday(date)}
+                    />
+                }
             </Main>
             <Menu />
         </>

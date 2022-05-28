@@ -7,6 +7,7 @@ import Main from './Main';import Title from './Title';
 import AddHabitWindow from './AddHabitWindow';
 import Habits from './Habits';
 import Menu from "./Menu";
+import LoadingPage from './LoadingPage';
 
 export default function HabitsPage () {
 
@@ -16,8 +17,11 @@ export default function HabitsPage () {
     const [habits, setHabits] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
     const [wasNotExecuted, setWasNotExecuted] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     function requestHabitsList () {
+
+        setIsLoading(true);
 
         const API = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits';
 
@@ -30,7 +34,10 @@ export default function HabitsPage () {
         const promise = axios.get(API, config);
 
         promise
-            .then( response => setHabits([...response.data]) )
+            .then( response => {
+                setHabits([...response.data]) 
+                setIsLoading(false)
+            })
             .catch( err => {
                 alert(err.response.data.message);
                 navigate("/");
@@ -63,14 +70,9 @@ export default function HabitsPage () {
         )
     }
 
-    return (
-        <>
-            <Header image={profilePicture} />
-            <Main>
-                <Title>
-                    <h2>{'Meus hábitos'}</h2>
-                    <button onClick={ () => setIsVisible(true) }>+</button>
-                </Title>
+    function HabitsList () {
+        return (
+            <>
                 {isVisible ? 
                     <AddHabitWindow 
                         setIsVisible={setIsVisible} 
@@ -80,6 +82,24 @@ export default function HabitsPage () {
                 <div>
                     {renderHabits()}
                 </div>
+            </>
+        )
+    }
+
+    return (
+        <>
+            <Header image={profilePicture} />
+            
+            <Main>
+                <Title>
+                    <h2>{'Meus hábitos'}</h2>
+                    <button onClick={ () => setIsVisible(true) }>+</button>
+                </Title>
+                { isLoading ?
+                    <LoadingPage />
+                :    
+                    <HabitsList />
+                }
             </Main>
             <Menu />
         </>
