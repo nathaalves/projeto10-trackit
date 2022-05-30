@@ -1,7 +1,7 @@
 import axios from "axios";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from './Main';import Title from './Title';
 import AddHabitWindow from './AddHabitWindow';
@@ -16,7 +16,6 @@ export default function HabitsPage () {
     const [profilePicture] = useState(credentials.image);
     const [habits, setHabits] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
-    const [wasNotExecuted, setWasNotExecuted] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
     function requestHabitsList () {
@@ -44,10 +43,9 @@ export default function HabitsPage () {
             })
     }
 
-    if (wasNotExecuted) {
+    useEffect( () => {
         requestHabitsList();
-        setWasNotExecuted(false);
-    }
+    }, [])
     
     function renderHabits () {
 

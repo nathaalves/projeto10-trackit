@@ -16,9 +16,9 @@ export default function LoginPage () {
 
     useEffect ( () => {
         if (localStorage.getItem('credentials') !== null) {
-            navigate('/habitos');
+            navigate('/hoje');
         }
-    }, [navigate])
+    }, [])
 
     function login (e) {
 
@@ -38,7 +38,7 @@ export default function LoginPage () {
             .then( response => {
                 const { data } = response;
                 localStorage.setItem('credentials', JSON.stringify(data));
-                navigate('/habitos');
+                navigate('/hoje');
             })
             .catch ( err => {
                 alert(err.response.data.message);

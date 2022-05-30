@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
 import Header from './Header';
 import Menu from './Menu';
@@ -7,14 +7,13 @@ import Main from './Main';
 import TodayHabit from './TodayHabit';
 
 export default function TodayHabitsPage () {
-    
+
     const { progress, todayHabits } = useContext(UserContext);
     const credentials = JSON.parse(localStorage.getItem('credentials'));
     const [profilePicture] = useState(credentials.image);
     const [date, setDate] = useState('');
-    const [wasNotExecuted, setWasNotExecuted] = useState(true);
 
-    if (wasNotExecuted) {
+    useEffect( () => {
 
         const dayjs = require('dayjs');
         const weekday = require('dayjs/plugin/weekday');
@@ -28,8 +27,7 @@ export default function TodayHabitsPage () {
     
         setDate(`${dayStr[dayIndex]}, ${dayOfMonth}/${month}`);
 
-        setWasNotExecuted(false)
-    }
+    }, [])
 
     function renderTodayHabits () {
         return (
@@ -52,9 +50,9 @@ export default function TodayHabitsPage () {
                     <div>
                         <h2>{date}</h2>
                         <h3>
-                            {progress === 0 ?
-                                'Nenhum hábito concluido ainda' :
+                            {progress ?
                                 `${Math.round(progress*100).toFixed(0)}% dos hábitos concluídos`
+                                 : 'Nenhum hábito concluido ainda'
                             }
                         </h3>
                     </div>

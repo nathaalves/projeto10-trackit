@@ -12,23 +12,16 @@ import '../assets/CSS/style.css'
 import '../assets/CSS/Calendar.css'
 
 export default function App () {
-
+    
     const [progress, setProgress] = useState(0);
     const [todayHabits, setTodayHabits] = useState([]);
-    const [habitName, setHabitName] = useState('')
-    const [habitDays, setHabitDays] = useState([])
 
     return (
         <UserContext.Provider value={{       
             progress,
             setProgress,
             todayHabits,
-            setTodayHabits,
-            habitName,
-            setHabitName,
-            habitDays,
-            setHabitDays,
-
+            setTodayHabits
         }}>
             <BrowserRouter >
                 <Routes>

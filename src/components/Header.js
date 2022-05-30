@@ -1,12 +1,29 @@
 import styled from 'styled-components';
+import { useState } from 'react'
+import LogOutButton from './LogOutButton';
 import logo from '../assets/images/logo-name.svg';
 
 export default function Header ( { image } ) {
+
+    const [visibilit, setVisibilit] = useState(false);
+
+    function showButton () {
+        
+        if (visibilit) {
+            setVisibilit(false);
+        } else {
+            setVisibilit(true);
+        }
+    }
+
     return (
-        <Container>
-            <img src={logo} alt="logo"/>
-            <img src={image} alt='profile'/>
-        </Container>
+        <>
+            <Container>
+                <img src={logo} alt="logo"/>
+                <img src={image} alt='profile' onClick={showButton} />
+            </Container>
+            {visibilit ? <LogOutButton /> : null}
+        </>
     )
 }
 
@@ -36,5 +53,6 @@ const Container = styled.header`
     img:last-child {
         width: 50px;
         border-radius: 50%;
+        cursor: pointer;
     }
 `;

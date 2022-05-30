@@ -3,6 +3,7 @@ import Menu from "./Menu"
 import { Circles } from 'react-loader-spinner';
 
 export default function LoadingPage () {
+
     return (
         <>
             <Main>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './Header'
 import Main from './Main';
 import Title from './Title';
@@ -23,11 +23,10 @@ export default function HistoricPage () {
     
     const credentials = JSON.parse(localStorage.getItem('credentials'));
     const [profilePicture] = useState(credentials.image);
-    const [isFirtRender, setIsFirstRender] = useState(true);
     const [historicList, setHistoricList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    if (isFirtRender) {
+    useEffect( () => {
 
         setIsLoading(true);
 
@@ -48,9 +47,7 @@ export default function HistoricPage () {
             })
             .catch( err => alert(err.response.data.message))
         ;
-
-        setIsFirstRender(false);
-    }
+    }, [])
 
     function tileClassName({ date, view }) {
 

@@ -6,7 +6,7 @@ import lixeira from '../assets/images/lixeira.svg'
 import requestTodayHabitsList from './requestTodayHabitsList';
 
 export default function Habits ({ habitDays, habitName, habitId, requestHabitsList }) {
-
+    
     const days = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
     const { setTodayHabits, setProgress } = useContext(UserContext);
 

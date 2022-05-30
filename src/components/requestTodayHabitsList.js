@@ -17,7 +17,13 @@ export default function requestTodayHabitsList (setTodayHabits, setProgress) {
     promise
         .then( response => {
             setTodayHabits([...response.data]);
-            setProgress(response.data.filter(habit => habit.done === true).length / response.data.length);
+            setProgress( () => {
+                if ( isNaN(response.data.filter(habit => habit.done === true).length / response.data.length) ) {
+                    return 0
+                } else {
+                    return response.data.filter(habit => habit.done === true).length / response.data.length
+                }
+            });
         })
         .catch( err => alert(err.response.data.message) );
 }
